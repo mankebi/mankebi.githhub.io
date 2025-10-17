@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tillsa</title>
+    <style>
+        .header {
+            background-color: gray;
+            display: flex;
+            flex-direction: row; /* 横向布局 */
+            justify-content: space-between; /* 主轴两端对齐 */
+            padding: 10px 20px; /*  设置内边距 */
+            align-items: center; /* 让退出登录按钮和表格居中 垂直上居中 */ 
+        }
+        
+        .header h1 {
+            margin: 0; /* 去掉默认的外边距 */
+            color: white;
+        }
+        
+        .header a {
+            color: white;
+            text-decoration: none;
+        }
+        
+        .header a:hover {
+            text-decoration: underline;
+        }
+        
+        table {
+            width: 100%;  /* 宽度为100% */
+            border-collapse: collapse; /* 合并边框 */
+            margin-top: 20px; /* 顶部外边距和表格之间的距离 */
+        }
+        
+        th, td {        
+            border: 1px solid #ddd;
+            padding: 12px;  
+            text-align: center;  /* 居中对齐 */
+        }
+        
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        .avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%; /* 圆形头像 */
+        }
+        form {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: row;
+            justify-content: center; /* 主轴居中 */
+            align-items: center; /* 垂直轴居中 */
+            gap: 100px ;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto; /* 居中容器 */
+            padding: 20px;
+        }
+        .button {
+            margin: 0 10px; /* 按钮之间的间距 */
+            padding: 8px 16px; /* 按钮内边距 */
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;   /* 圆角 */
+            cursor: pointer;      /* 鼠标悬停时变成小手 */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Tislla</h1>
+            <a href="#">退出登录</a>
+        </div>
+    
+    <form >
+            <input type="text" placeholder="请输入员工姓名">
+            <input>
+                <select id="gender" name="gender">
+                        <option value="">请选择</option>
+                        <option value="1">男</option>
+                        <option value="2">女</option>
+                </select>
+            </input>    
+            <input type="button" value="查询">
+            <input type="button" value="清空">
+
+    </form>
+    <table>
+        <thead>
+            <tr id="1">
+                <th>序号</th>
+                <th>姓名</th>
+                <th>性别</th>
+                <th>头像</th>
+                <th>职位</th>
+                <th>入职日期</th>
+                <th>最后操作时间</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr  v-for="(e,index) in empList " :key="e.id">
+                <td>{{index}}</td>
+                <td>{{e.name}} </td>
+                <td>{{e.gender == 1 ?'男' : '女'}}</td>
+                <!-- 插值表达式不能出现在 标签内部 -->
+                <td><img v-bind :src="e.avatar" :alt="e.name" class="avatar"></td>     <!-- /*如果图片找不到alt显示里面的内容 */ -->
+                <td>{{e.position}}</td>
+                <td>{{e.entryDate}}</td>
+                <td>{{e.lastOperationTime}}</td>
+                <td class="button">
+                     <buttton type="button">编辑</buttton>
+                     <button type="button">删除</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+       <script type="module">
+import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
+createApp({
+    data() {
+        return {
+            empList: [
+                {
+                    id: 1,
+                    name: '张三',
+                    gender: 1,  // 修改为数字
+                    avatar: 'https://picsum.photos/id/237/200/300',
+                    position: '前端工程师',
+                    entryDate: '2023-01-15',
+                    lastOperationTime: '2023-10-20 14:30'
+                },
+                {
+                    id: 2, 
+                    name: '李四',
+                    gender: 2,  // 修改为数字
+                    avatar: 'https://picsum.photos/id/237/200/300',
+                    position: '后端工程师',
+                    entryDate: '2022-11-30',
+                    lastOperationTime: '2023-10-19 09:15'
+                },
+                {
+                    id: 3,
+                    name: '王五',   
+                    gender: 1,  // 修改为数字
+                    avatar: 'https://picsum.photos/id/237/200/300',
+                    position: '产品经理',
+                    entryDate: '2021-05-10',
+                    lastOperationTime: '2023-10-18 16:45'
+                },
+                {
+                    id: 4,
+                    name: '赵六',
+                    gender: 2,  // 修改为数字
+                    avatar: 'https://picsum.photos/id/237/200/300',
+                    position: 'UI设计师',
+                    entryDate: '2023-03-22',
+                    lastOperationTime: '2023-10-20 11:20'
+                },
+                {
+                    id: 5,
+                    name: '钱七',
+                    gender: 1,  // 修改为数字
+                    avatar: 'https://picsum.photos/id/237/200/300',
+                    position: '测试工程师',
+                    entryDate: '2022-08-14',
+                    lastOperationTime: '2023-10-19 13:10'
+                }
+            ]
+        }
+    }         
+}).mount('.container')  // 注意前面加点，表示 class 选择器 man
+</script>
+    </div>    
+</body>
+</html>
+            <!-- <td> -->
+                <!-- <span v-if="e.gender == 1"> man</span>  判断性别如果条件成立才渲染标签 -->
+                <!-- <span v-show=" e.gender == 1 "> kebi</span> 判断性别不管条件成不成立都会渲染标签 -->
+                
+
+            <!-- </td> -->
